@@ -34,10 +34,19 @@ public:
 	friend std::istream& operator >>(std::istream& stream, List& list);
 };
 
+enum AddMode { Inc, Dec };
+
 class SortedList : public List {
 private:
+	static AddMode add_mode;
+
 	std::istream& input(std::istream& stream) override;
+
+	static bool less(int a, int b);
+	static bool bigger(int a, int b);
 public:
+	static void set_add_mode(AddMode mode);
+
 	void add(int _info) override;
 	void remove(int _info) override;
 };

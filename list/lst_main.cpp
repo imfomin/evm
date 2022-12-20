@@ -12,6 +12,7 @@ int main() {
 	cout << list << endl;
 
 	SortedList list1;
+	SortedList::set_add_mode(Dec);
 	List& _list = list1;
 	in >> list1;
 	cout << list1 << endl;

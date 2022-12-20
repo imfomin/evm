@@ -208,6 +208,19 @@ std::istream& operator >>(std::istream& stream, List& list) {
 
 // ------------------------------------------------------------------------
 
+bool SortedList::less(int a, int b) {
+	return a < b;
+}
+bool SortedList::bigger(int a, int b) {
+	return a > b;
+}
+
+void SortedList::set_add_mode(AddMode mode) {
+	add_mode = mode;
+}
+
+AddMode SortedList::add_mode = Inc;
+
 void SortedList::add(int _info) {
 	Node* new_node = new Node;
 	new_node->info = _info;
@@ -220,7 +233,15 @@ void SortedList::add(int _info) {
 
 	Node* head_t = head;
 	Node* head_prev = nullptr;
-	while (head_t && head_t->info < _info) {
+
+	bool (*cmp_predicate)(int, int);
+	switch (add_mode) {
+	case Inc: cmp_predicate = less;		break;
+	case Dec: cmp_predicate = bigger;	break;
+	default: throw 1;
+	}
+
+	while (head_t && cmp_predicate(head_t->info, _info)) {
 		head_prev = head_t;
 		head_t = head_t->next;
 	}
